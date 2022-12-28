@@ -6,16 +6,8 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 
 const CheckoutPage = () => {
 
-    const { cartItems } = useContext(CartContext);
-
-    const totalAmountOfCartItems = () => {
-        let total = 0;
-        cartItems.forEach((item) => {
-            total += item.price * item.quantity;
-        })
-        return total;
-    }
-
+    const { cartItems , cartTotal} = useContext(CartContext);
+    
     return (
         <div className='checkout-container'>
             <div className='checkout-header'>
@@ -42,7 +34,7 @@ const CheckoutPage = () => {
                     );
                 })}
             <span className='total'>Total: 
-                <span className='total-amount'> ${totalAmountOfCartItems()}</span>
+                <span className='total-amount'> ${cartTotal}</span>
             </span>
         </div>
     )
