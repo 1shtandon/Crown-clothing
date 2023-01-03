@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
                 createUserDocumentFromAuth(user);
             }
             setCurrentUser(user);
-            console.log("User changed", user);
+            // console.log("User changed", user);
         });
         return unsubscribe;
     }, []);

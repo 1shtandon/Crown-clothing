@@ -23,6 +23,10 @@ import {
     doc,
     getDoc,
     setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs
 }
     from "firebase/firestore";
 
@@ -53,6 +57,37 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 // creating a firestore database
 export const db = getFirestore();
+
+export const addCollectionsAndDocument = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    // creating a batch for adding multiple documents
+    const batch = writeBatch(db);
+
+    // now adding the documents to the batch
+    objectsToAdd.forEach((obj) => {
+        const newDocRef = doc(collectionRef, obj.title.toLowerCase());
+        batch.set(newDocRef, obj);
+    }
+    );
+
+    // now commiting the batch
+    await batch.commit();
+    console.log("Batch committed");
+}
+
+export const getCategoriesAndDocuments = async () => {
+
+    const collectionRef = collection(db, "categories");
+    const q = query(collectionRef);
+    const querySnapshot = await getDocs(q);
+
+    const categoryMap = querySnapshot.docs.reduce((acc , docSnapshot ) => {
+        const {title , items} = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+     }, {});
+     return categoryMap;
+}
 
 // creating a function to store user data in firestore database
 // note that the doc takes 3 arguments : database , collections , and the identifier
@@ -110,7 +145,7 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 // function that signs out the user
 export const signOutUser = async () => await signOut(auth);
- 
+
 // using the observer to check if the user is signed in or not
-export const onAuthStateChangeListener = (callback) => 
+export const onAuthStateChangeListener = (callback) =>
     onAuthStateChanged(auth, callback);
