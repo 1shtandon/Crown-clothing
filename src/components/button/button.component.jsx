@@ -1,12 +1,19 @@
-import "./button.styles.scss";
-// children defines 
-const Button = ({ children, isGoogleSignIn, inverted, ...otherProps }) => (
-    <button
-        className={`${inverted ? 'inverted' : ''} ${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`}
-        {...otherProps}
-    >
-        {children}
-    </button>
-);
+import { BaseButton , GoogleSignInButton , InvertedButton } from "./button.styles";
+
+const getButtonStyles = (props) => {
+    if (props.isGoogleSignIn) {
+        return GoogleSignInButton;
+    }
+    return props.inverted ? InvertedButton : BaseButton;
+};
+
+const Button = (props) => {
+    const ButtonStyles = getButtonStyles(props);
+    return (
+        <ButtonStyles {...props}>
+            {props.children}
+        </ButtonStyles>
+    );
+};
 
 export default Button;
