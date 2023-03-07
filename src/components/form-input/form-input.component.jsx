@@ -1,18 +1,20 @@
-import './form-input.styles.scss';
+import {GroupContainer , FormInputContainer , FormInputLabel} from './form-input.styles.jsx';
+
+
+
 const FormInput = ({ label, ...otherprops }) => {
     return (
-        <div className="group">
-            <input className="form-input"{...otherprops} />
-            {label && (
-                <label
-                    className={`${otherprops.value.length ? 'shrink' : ''} form-input-label`}
+        <GroupContainer>
+            <FormInputContainer {...otherprops} />
+            {label ? (
+                <FormInputLabel
+                    className={otherprops.value.length ? 'shrink' : ''}
                 >
                     {label}
-                </label>
-            )}
-            
-        </div>
-    )
-}
+                </FormInputLabel>
+            ) : null}
+        </GroupContainer>
+    );
+};
 
 export default FormInput;

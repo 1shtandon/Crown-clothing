@@ -1,42 +1,33 @@
-import './checkout.styles.scss';
+import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total, ModifyQuantity } from './checkout.styles.jsx';
 
 import { useContext } from 'react';
 import { CartContext } from '../../contexts/cart.context';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+import { Form } from 'react-router-dom';
 
 const CheckoutPage = () => {
 
-    const { cartItems , cartTotal} = useContext(CartContext);
-    
+    const { cartItems, cartTotal } = useContext(CartContext);
+
     return (
-        <div className='checkout-container'>
-            <div className='checkout-header'>
-                <div className='header-block'>
-                    <span>Product</span>
-                </div>
-                <div className='header-block'>
-                    <span>Description</span>
-                </div>
-                <div className='header-block'>
-                    <span>Quantity</span>
-                </div>
-                <div className='header-block'>
-                    <span>Price</span>
-                </div>
-                <div className='header-block'>
-                    <span>Remove</span>
-                </div>
-            </div>
+        <CheckoutContainer>
+            <CheckoutHeader>
+                <HeaderBlock>Product</HeaderBlock>
+                <HeaderBlock>Description</HeaderBlock>
+                <HeaderBlock>Quantity</HeaderBlock>
+                <HeaderBlock>Price</HeaderBlock>
+                <HeaderBlock>Remove</HeaderBlock>
+            </CheckoutHeader>
             {cartItems.map(
                 (cartItem) => {
                     return (
                         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
                     );
                 })}
-            <span className='total'>Total: 
-                <span className='total-amount'> ${cartTotal}</span>
-            </span>
-        </div>
+            <Total>Total:
+                ${cartTotal}
+            </Total>
+        </CheckoutContainer>
     )
 }
 
