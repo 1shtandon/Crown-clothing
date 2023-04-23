@@ -100,10 +100,10 @@ export const createUserDocumentFromAuth = async (
     if (!userAuth) return;
 
     const userDocRef = doc(db, "users", userAuth.uid);
-    console.log(userDocRef);
+    // console.log(userDocRef);
     const userDocSnapshot = await getDoc(userDocRef);
-    console.log(userDocSnapshot);
-    console.log(userDocSnapshot.exists());
+    // console.log(userDocSnapshot);
+    // console.log(userDocSnapshot.exists());
 
     // now we check if the user exists in the database or not and if not we create a new user
 
